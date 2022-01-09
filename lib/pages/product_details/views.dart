@@ -139,7 +139,9 @@ class _ProductDetailsState extends State<ProductDetails> {
                 height: 50.0,
                 child: ElevatedButton(
                   onPressed: () {
+                    print('213');
                     if(int.parse(_quantity.text)>args[1]){
+                      
                         AwesomeDialog(
                 context: context,
                 dialogType:DialogType.ERROR,
@@ -152,6 +154,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                 )..show();
                     }
                     else{
+                      print('21323');
                        if((args[1]-int.parse(_quantity.text))<=3){
                         AwesomeDialog(
                 context: context,
@@ -163,6 +166,9 @@ class _ProductDetailsState extends State<ProductDetails> {
                        addSales();
                 },
                 )..show();
+                    }
+                    else{
+                       addSales();
                     }
                  
                     }
