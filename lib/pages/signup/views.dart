@@ -24,7 +24,9 @@ class _SignUpState extends State<SignUp> {
       desc: desc,
       btnOkOnPress: () {
         if (DialogType.ERROR == type) {
-        } else {}
+        } else {
+          Get.toNamed('/login');
+        }
       },
     )..show();
   }

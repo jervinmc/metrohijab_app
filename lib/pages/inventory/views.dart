@@ -27,13 +27,15 @@ static String BASE_URL = ''+Global.url+'/sales';
     final response = await http.get(
         Uri.parse(BASE_URL +'/'+ _id.toString()),
         headers: {"Content-Type": "application/json"});
-
+      setState(() {
+      _load=false;
+    });
     this.setState(() {
       try {
         _load = false;
         data = json.decode(response.body);
       } finally {
-        _load = false;
+        // _load = false;
       }
     });
     return "";
@@ -48,7 +50,7 @@ static String BASE_URL = ''+Global.url+'/sales';
     return Scaffold(
       appBar:AppBar(title: Text('Inventory'),backgroundColor: Colors.purple,),
       body:_load ?  Center(child: new CircularProgressIndicator(),
-                          ) : new ListView.separated(
+                          ) : data.length==0 ? Text('No data.') : new ListView.separated(
               itemCount: data == null ? 0 : data.length,
               itemBuilder: (BuildContext context, int index) {
                 return new ListTile(

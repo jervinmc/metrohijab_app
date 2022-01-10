@@ -25,7 +25,9 @@ class _SalesState extends State<Sales> {
     var _id = prefs.getInt("_id");
     final response = await http.get(Uri.parse(BASE_URL + '/' + _id.toString()),
         headers: {"Content-Type": "application/json"});
-
+setState(() {
+      _load = false;
+    });
     this.setState(() {
       try {
         _load = false;
@@ -53,7 +55,7 @@ class _SalesState extends State<Sales> {
           ? Center(
               child: new CircularProgressIndicator(),
             )
-          : new ListView.separated(
+          : data.length==0 ? Text('No data.') : new ListView.separated(
               itemCount: data == null ? 0 : data.length,
               itemBuilder: (BuildContext context, int index) {
                 return new ListTile(

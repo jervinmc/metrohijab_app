@@ -18,7 +18,41 @@ class _AddInventoryState extends State<AddInventory> {
   TextEditingController _productName = new TextEditingController();
   TextEditingController _quantity = new TextEditingController();
   TextEditingController _price = new TextEditingController();
+  bool isNumeric(String s) {
+ if (s == null) {
+   return false;
+ }
+ return double.tryParse(s) != null;
+}
     void addProduct() async {
+      if(!isNumeric(_price.text) || !isNumeric(_quantity.text)){
+           AwesomeDialog(
+                context: context,
+                dialogType:DialogType.ERROR,
+                animType: AnimType.BOTTOMSLIDE,
+                title: 'Please enter valid value.',
+                desc: '',
+                btnOkOnPress: () {
+                
+                  _quantity.text='';
+                  _price.text='';
+                },
+                )..show();
+                return;
+      }
+      if(_productName.text=='' || _price.text=='' || _quantity.text==''){
+        AwesomeDialog(
+                context: context,
+                dialogType:DialogType.ERROR,
+                animType: AnimType.BOTTOMSLIDE,
+                title: 'Please fill up the form completely.',
+                desc: '',
+                btnOkOnPress: () {
+                },
+                )..show();
+                return;
+      }
+
       final prefs = await SharedPreferences.getInstance();
      print(prefs.getBool("isLoggedIn"));
       var params = {

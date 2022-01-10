@@ -15,11 +15,30 @@ class ProductDetails extends StatefulWidget {
 class _ProductDetailsState extends State<ProductDetails> {
   final args;
   bool _load=false;
+  bool isNumeric(String s) {
+ if (s == null) {
+   return false;
+ }
+ return double.tryParse(s) != null;
+}
   _ProductDetailsState(this.args);
   TextEditingController _quantity = new TextEditingController();
   static String BASE_URL = ''+Global.url+'/sales/1';
   static String BASE_URL_DELETE = ''+Global.url+'/products/1';
     void addSales() async {
+       if(!isNumeric(_quantity.text)){
+           AwesomeDialog(
+                context: context,
+                dialogType:DialogType.ERROR,
+                animType: AnimType.BOTTOMSLIDE,
+                title: 'Please enter valid value.',
+                desc: '',
+                btnOkOnPress: () {             
+                  _quantity.text='';
+                },
+                )..show();
+                return;
+      }
       final prefs = await SharedPreferences.getInstance();
      print(prefs.getBool("isLoggedIn"));
       var params = {
